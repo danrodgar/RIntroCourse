@@ -1,0 +1,60 @@
+
+---
+title: "Big Data Analytics with R"
+author: 
+date: March 22, 2005
+output: beamer_presentation
+
+
+---
+
+# Introduction to R
+
+The goal of the first part of this book is to get you up to speed with the basics of __R__ as quickly as possible. 
+
+![](figures/Kristiana.jpg)
+
+# Installation 
+  
+Follow the procedures according to your operating system.
+
+  * Linux: You need to have `blas` and `gfortran` installed on your Linux, for installing the `coin` package.
+  * _Rgraphviz_ requires installation from  `source("http://bioconductor.org/biocLite.R")`, then `biocLite("Rgraphviz")`.
+  * Uncomment the following lines for installing all missing packages (this will take some time):
+
+
+
+# R and RStudio
+  * R is a programming language for statistical computing and data analysis that supports a variety of programming styles. See [R in Wikipedia](https://en.wikipedia.org/wiki/R_(programming_language))
+  * R has multiple online resources and books.
+  * [R coding style](https://google.github.io/styleguide/Rguide.xml)
+  * [R-Bloggers](https://www.r-bloggers.com/)
+  * Getting help in R
+    + [RStudio cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf) 
+    + [Base R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf)
+    + [Advanced R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf)
+    + [Data Visualization cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)
+    + [R Markdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+    + [R Markdown Basics] (http://rmarkdown.rstudio.com/authoring_basics.html)
+    + `help("    ")` command 
+  - R as a calculator. Console: It uses the command-line interface. 
+
+
+
+
+# Examples 
+
+```{r}
+x <- c(1,2,3,4,5,6)   # Create ordered collection (vector)
+y <- x^2              # Square the elements of x
+print(y)              # print (vector) y
+mean(y)               # Calculate average (arithmetic mean) of (vector) y; result is scalar
+var(y)                # Calculate sample variance
+lm_1 <- lm(y ~ x)     # Fit a linear regression model "y = f(x)" or "y = B0 + (B1 * x)"
+                      # store the results as lm_1
+print(lm_1)           # Print the model from the (linear model object) lm_1
+summary(lm_1)         # Compute and print statistics for the fit
+                      # of the (linear model object) lm_1
+par(mfrow=c(2, 2))    # Request 2x2 plot layout
+plot(lm_1)            # Diagnostic plot of regression model
+```  
