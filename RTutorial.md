@@ -1,180 +1,81 @@
 RTutorial
 ========================================================
-author: 
-date: 
+author: Kristiana University College
+date: Oct 2020
 autosize: true
-
-First Slide
-========================================================
-
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
-
-- Bullet 1
-- Bullet 2
-- Bullet 3
-
-Slide With Code
-========================================================
-
-
-```r
-summary(cars)
-```
-
-```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
-
-Slide With Plot
-========================================================
-
-![plot of chunk unnamed-chunk-2](RTutorial-figure/unnamed-chunk-2-1.png)
-
-
-========================================================
 
 ![Kristiana](figures/Kristiana.jpg)
 
 
-
-Examples 
-========================================================
-
-```r
-x <- c(1,2,3,4,5,6)   # Create ordered collection (vector)
-y <- x^2              # Square the elements of x
-print(y)              # print (vector) y
-```
-
-```
-[1]  1  4  9 16 25 36
-```
-
-```r
-mean(y)               # Calculate average (arithmetic mean) of (vector) y; result is scalar
-```
-
-```
-[1] 15.16667
-```
-
-```r
-var(y)                # Calculate sample variance
-```
-
-```
-[1] 178.9667
-```
-
-========================================================
-
-```r
-lm_1 <- lm(y ~ x)     # Fit a linear regression model "y = f(x)" or "y = B0 + (B1 * x)"
-                      # store the results as lm_1
-print(lm_1)           # Print the model from the (linear model object) lm_1
-```
-
-```
-
-Call:
-lm(formula = y ~ x)
-
-Coefficients:
-(Intercept)            x  
-     -9.333        7.000  
-```
-
-
-========================================================
-
-```r
-summary(lm_1)         # Compute and print statistics for the fit of the (linear model object) lm_1
-```
-
-```
-
-Call:
-lm(formula = y ~ x)
-
-Residuals:
-      1       2       3       4       5       6 
- 3.3333 -0.6667 -2.6667 -2.6667 -0.6667  3.3333 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  -9.3333     2.8441  -3.282 0.030453 *  
-x             7.0000     0.7303   9.585 0.000662 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.055 on 4 degrees of freedom
-Multiple R-squared:  0.9583,	Adjusted R-squared:  0.9478 
-F-statistic: 91.88 on 1 and 4 DF,  p-value: 0.000662
-```
-
-========================================================
-
-```r
-plot(lm_1)            # Diagnostic plot of regression model
-```
-
-![plot of chunk unnamed-chunk-6](RTutorial-figure/unnamed-chunk-6-1.png)![plot of chunk unnamed-chunk-6](RTutorial-figure/unnamed-chunk-6-2.png)![plot of chunk unnamed-chunk-6](RTutorial-figure/unnamed-chunk-6-3.png)![plot of chunk unnamed-chunk-6](RTutorial-figure/unnamed-chunk-6-4.png)
-
-
-
 What is R
 ========================================================
-Dialect of S-language, 20 years old
-(Bell Labs, turning ideas quickly and faithfully)
-Language + Environment for statistical computing, package based
-CRAN Task Views: cran.r-project.org/web/views/
-Object-Oriented language
-Free! (open source)
+
++ Dialect of S-language
+
++ 20 years old (Bell Labs, turning ideas quickly and faithfully)
+
++ Language + Environment for statistical computing, package based
+
+[CRAN Task Views]: (https://cran.r-project.org/web/views/)
+
++ Object-Oriented language
+
++ Free! (open source)
 
 
 Getting started
 ========================================================
 
-Easy installation
-Workspace:
-.Rdata
++ Easy installation
 
-History:
-Rprofile.site
-.Rhistory
++ Workspace:
 
-Layout:
-Console
-RStudio
+ - .Rdata
+
++ History:
+
+  - Rprofile.site
+
+  - .Rhistory
+
++ Layout:
+
+  - Console
+
+  - RStudio
+
+
 
 
 R commands
 ========================================================
-Case sensitive
-Expression or Assignment
-Comments starting with #
-Quit command:
-q()
++ Case sensitive
+
++ Expression or Assignment
+
++ Comments starting with `#`
+
++ Quit command: `q()`
 
 
 Help
 ========================================================
-help(...)
-help.search(...)
-apropos(...)
-example(...)
+
++ `help(...)`
+
++ `help.search(...)`
+
++ `apropos(...)`
+
++ `example(...)`
 
 
 Working directory
 ========================================================
-getwd()
-setwd(...)
+
++ `getwd()`
+
++ ´setwd(...)`
 
 
 
@@ -194,12 +95,18 @@ Quit
 
 Exercise 1. Install R and RStudio (10 min)
 ========================================================
+
 1. Install R:
-  a. R website: http://www.r-project.org/
+  a. R website:
+  
+  
   b. R download: http://cran.uib.no/
+  
 2. Install RStudio:
+
 a. RStudio website: http://www.rstudio.com/
-b. choose the Desktop version.
+
+b. Choose the Desktop version.
 
 
 
@@ -269,7 +176,7 @@ sqrt(25) # Math function
 
 Basic R
 ========================================================
-objects
+Objects
 
 
 ```r
@@ -332,10 +239,19 @@ Vectors and length
 
 
 ```r
-x<- c(3,4,1)
-x= x + 4
-y= c(10,11)
-z= x + y
+x <- c(3,4,1)
+x <- x + 4
+
+x
+```
+
+```
+[1] 7 8 5
+```
+
+```r
+y = c(10,11)
+z = x + y
 ```
 
 
@@ -356,10 +272,11 @@ Basic R
 
 + Arithmetic
 
-
 +, *, -, /, ^
+
 sqrt, log, exp, sin, cos, tan, min, max,
 length, sum, mean, var
+
 
 
 Basic R
@@ -406,6 +323,8 @@ seq(from = 1, length = 10, by =4)
 ```
  [1]  1  5  9 13 17 21 25 29 33 37
 ```
+
+
 
 Basic R
 ========================================================
@@ -485,7 +404,6 @@ matrixA
 [4,]    4    9
 [5,]    5   10
 ```
-
 
 
 Basic R
@@ -739,15 +657,15 @@ Reading data from a table
 
 
 ```r
-read.table("housing_prices.dat",header=TRUE)
+read.table("housing_prices.dat", header=TRUE, sep = ",")
 ```
 
 ```
-      cities squaremeters prices
-1 Trondheim,          80,    3.0
-2 Trondheim,         120,    4.5
-3      Oslo,         110,    5.1
-4    Bergen,          90,    3.7
+     cities squaremeters prices
+1 Trondheim           80    3.0
+2 Trondheim          120    4.5
+3      Oslo          110    5.1
+4    Bergen           90    3.7
 ```
 
 
@@ -829,7 +747,7 @@ library(maps)
 map(database="world",region="uk")
 ```
 
-![plot of chunk unnamed-chunk-33](RTutorial-figure/unnamed-chunk-33-1.png)
+![plot of chunk unnamed-chunk-27](RTutorial-figure/unnamed-chunk-27-1.png)
 
 Visualisation
 ========================================================
@@ -843,7 +761,7 @@ Visualising maps: maps
 map(database = "world",interior = FALSE)
 ```
 
-![plot of chunk unnamed-chunk-34](RTutorial-figure/unnamed-chunk-34-1.png)
+![plot of chunk unnamed-chunk-28](RTutorial-figure/unnamed-chunk-28-1.png)
 
 Visualisation
 ========================================================
@@ -862,7 +780,7 @@ map(database="japan")
 map(database="japan",boundary=FALSE,interior=TRUE,col="gray",add=TRUE)
 ```
 
-![plot of chunk unnamed-chunk-35](RTutorial-figure/unnamed-chunk-35-1.png)
+![plot of chunk unnamed-chunk-29](RTutorial-figure/unnamed-chunk-29-1.png)
 
 
 Visualisation
