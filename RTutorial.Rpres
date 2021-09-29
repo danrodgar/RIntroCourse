@@ -1,10 +1,13 @@
-RTutorial
+R Tutorial
 ========================================================
 author: Kristiana University College
-date: Oct 2020
+date: Oct 2021
 autosize: true
 
-![Kristiana](figures/Kristiana.jpg)
+Master Big Data
+
+
+![Kristiana](./figures/KristianiaUniversityCollege_hvit_rgb.png)
 
 
 What is R
@@ -30,21 +33,49 @@ Getting started
 
 + Workspace:
 
- - .Rdata
+ - `.Rdata`
 
 + History:
 
-  - Rprofile.site
+  - `Rprofile.site`
 
-  - .Rhistory
+  - `.Rhistory`
 
 + Layout:
 
   - Console
 
-  - RStudio
+  - RStudio (later)
 
+Getting started
+========================================================
 
+-   R is a programming language for statistical computing and data analysis that supports a variety of programming styles. See [R in Wikipedia](https://en.wikipedia.org/wiki/R_(programming_language))
+
+-   R has multiple online resources and books. 
+
+-   [R coding style](https://google.github.io/styleguide/Rguide.xml)
+
+-   [R-Bloggers](https://www.r-bloggers.com/)
+
+- Repositories
+    - [CRAN](https://cran.r-project.org/)
+    - [Bioconductor](https://www.bioconductor.org/)
+    - Etc
+
+Getting help in R
+========================================================
+
+-   [RStudio cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
+-   [Base R cheat sheet](http://github.com/rstudio/cheatsheets/raw/master/base-r.pdf)
+-   [Advanced R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf)
+-   [Data Visualization cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+-   [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+-   [R Markdown Basics] (<http://rmarkdown.rstudio.com/authoring_basics.html>)
+-   [Python with R and Reticulate Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/reticulate.pdf)
+-   [Caret](https://github.com/rstudio/cheatsheets/raw/master/caret.pdf) (More later)
+-   [All cheatsheets and translations](https://rstudio.com/resources/cheatsheets/)
+-   Bookdown [bookdown.org](bookdown.org)
 
 
 R commands
@@ -55,7 +86,7 @@ R commands
 
 + Comments starting with `#`
 
-+ Quit command: `q()`
++ Quit command: `q()` or `quit()`
 
 
 Help
@@ -73,9 +104,11 @@ Help
 Working directory
 ========================================================
 
+Working directory can be accessed and set through:
+
 + `getwd()`
 
-+ ´setwd(...)`
++ `setwd(...)`
 
 
 
@@ -83,10 +116,12 @@ R session
 ========================================================
 Start R in your working directory
   + Rprofile.site, .Rhistory, .RData
+  
 Use R:
   + Instantiate objects/variables
   + Make computation
   + Visualization
+  
 Quit
  + Save workspace
  + Rprofile.site, .Rhistory, .Rdata
@@ -97,32 +132,35 @@ Exercise 1. Install R and RStudio (10 min)
 ========================================================
 
 1. Install R:
-  a. R website:
+
+  a. R website: https://cran.r-project.org/
   
-  
-  b. R download: http://cran.uib.no/
+  b. R download (many mirrors): http://cran.uib.no/
   
 2. Install RStudio:
 
-a. RStudio website: http://www.rstudio.com/
+  a. RStudio website: http://www.rstudio.com/
 
-b. Choose the Desktop version.
+  b. Choose the Desktop version.
 
+
+Rstudio
+========================================================
+![RStudio](./figures/RStudio.png)
 
 
 Part 2. Basic R.
 ========================================================
 
-Basic R
+Basic R - Operators
 ========================================================
 Operations
 + addition: +
 + subtraction: -
 + multiplication: *
-+ division: /
++ division: /, integer division: %/% 
 + exponentiation: ^
-+ modulo: %%
-
++ modulus operator: %%
 
 
 Basic operations
@@ -149,7 +187,77 @@ sqrt(25) # Math function
 ```
 
 
-Basic R
+Basic Data Types
+========================================================
+
+-   `class( )`
+
+-   logical: `TRUE`, `T`, `FALSE`, `F`
+
+-   numeric, integer:
+
+    -   `is.numeric()`
+    -   `is.integer()`
+
+-   `character`
+
+
+Basic Data Types - Examples
+========================================================
+
+- TRUE or T, FALSE or F
+
+```{r}
+TRUE
+class(TRUE)
+FALSE
+F
+```
+
+
+Basic Data Types - Examples
+========================================================
+-   `NA` stands for Not Available, which is not a number as well. It applies to missing values.
+-   `NaN` means 'Not a Number'
+
+```{r}
+NA
+class(NA)
+
+NaN
+class(NaN)
+```
+
+Basic Data Types - Examples 
+========================================================
+```{r}
+T
+F
+NaN
+class(NaN)
+```
+
+Basic Data Types - Examples
+========================================================
+```{r}
+# numeric data type
+2
+class(2)
+2.5
+2L  # integer
+class(2L)
+```
+
+========================================================
+```{r}
+is.numeric(2)
+is.numeric(2L)
+is.integer(2)
+is.integer(2L)
+is.numeric(NaN)
+```
+
+Basic R - Objects
 ========================================================
 Objects
 
@@ -162,35 +270,45 @@ objects()
 ```
 
 
-Basic R
+Basic R - Vectors
 ========================================================
-Vectors
-  + Sequence of ordered numbers
+Vectors, sequence of ordered numbers
   
 ```{r}
 x <- c(23,22,10,5.4,22.1)
 x
-
 x = c(23,22,10,5.4,22.1)
 x
-
 c(23,22,10,5.4,22.1) -> x
 x
-
-x = assign("x",c(23,22,10,5.4,22.1))
+assign("x",c(23,22,10,5.4,22.1))# <- is equivalent to 'assign()'
 x
 ```
 
-
-Basic R
+Basic R - Vectors
 ========================================================
-Vectors and length
 
+```{r}
+phases <- c("reqs", "dev", "test1", "test2", "maint")
+str(phases[2])
+is.vector(phases)
+length(phases)
+```
+
+========================================================
+```{r}
+thevalues <- c(15, 60, 30, 35, 22)
+names(thevalues) <- phases
+str(thevalues)
+thevalues
+```
+
+Basic R - Vectors
+========================================================
 
 ```{r}
 x <- c(3,4,1)
 x <- x + 4
-
 x
 
 y = c(10,11)
@@ -204,22 +322,49 @@ What about z?
 z
 ```
 
-
-Basic R
+Basic R - Vectors
 ========================================================
 
-+ Arithmetic
+A single value is a vector! Example:
 
-+, *, -, /, ^
+```{r}
+aphase <- 44
+is.vector(aphase)
 
-sqrt, log, exp, sin, cos, tan, min, max,
-length, sum, mean, var
+length(aphase)
+```
 
 
-
-Basic R
+Basic R - Coercion for vectors
 ========================================================
-Sequences
+
+```{r}
+thevalues1 <- c(15, 60, "30", 35, 22)
+class(thevalues1)
+thevalues1
+
+```
+
+Basic R - Arithmetic
+========================================================
+
+Other functions:
+
+`sqrt`, `log`, `exp`, `sin`, `cos`, `tan`, `min`, `max`,
+`length`, `sum`, `mean`, `var`, ...
+
+
+```{r}
+NA + 1
+mean(c(5,NA,7))
+
+# some functions allow to remove NAs
+mean(c(5,NA,7), na.rm=TRUE)  
+```
+
+
+Basic R - Sequences
+========================================================
 
 ```{r}
 1:10
@@ -229,11 +374,13 @@ seq(from = 10, to = 1)
 seq(from = 1, length = 10, by =4)
 ```
 
-
-
-Basic R
 ========================================================
-Logical vectors
+```{r}
+seq(0,1,.1)
+```
+
+Basic R - Logical vectors
+========================================================
 
 ```{r}
 x = seq(from=1, to=10)
@@ -242,7 +389,7 @@ y = (x %% 3 == 0)
 y
 ```
 
-Basic R
+Basic R - Index vectors
 ========================================================
 Index vectors
   + accessed by index
@@ -259,11 +406,10 @@ x[x<7]
 ```
 
 
-Basic R
+Basic R - Matrices
 ========================================================
 
-Matrices
-  + a matrix: is a two-dimensional object
+A matrix: is a two-dimensional object
   + created using the “matrix” function
   
 ```{r}
@@ -272,10 +418,10 @@ matrixA
 ```
 
 
-Basic R
+Basic R - Arrays
 ========================================================
-Arrays
-  + an array: is a __n-dimensional__ object, 
+
+An array is a __n-dimensional__ object, 
   + created using the “array” and dim functions
   
 ```{r}
@@ -289,9 +435,9 @@ y = array(data=x, dim=c(2,3,2))
 y
 ```
 
-Basic R
+Basic R - Arrays and matrices: accessing by index
 ========================================================
-Arrays and matrices: accessing by index
+
 
 ```{r}
 x <- array(data=c(1:12), dim=c(3,4)) #generate 3 by 4 matrix
@@ -303,6 +449,8 @@ i <- array(c(1:3,3:1), dim=c(3,2))
 i
 ```
 
+========================================================
+
 ```{r}
 x[i] <- -1
 x
@@ -310,9 +458,9 @@ x
 
 
 
-Basic R
+Basic R - Lists
 ========================================================
-Lists
+
   + a collection of objects (components)
   + components can be of different types
   + each element in a list can be a:
@@ -321,7 +469,19 @@ Lists
     - array
     - dataframe
     - list
-  
+
+
+
+Basic R - Lists
+========================================================
+
+```{r}
+lst = list(name="Erna", surname="Solberg", age=52, birthplace="Bergen")
+lst$name
+lst[1]
+length(lst)
+```
+
   
 Exercise 2 2. Basic R (15 min)
 ========================================================
@@ -357,26 +517,13 @@ Exercise
 Example output:
 > x
 
-> `[1] 1 2 3 0 5 6 7 0 9 10 11 0...`3
+> `[1] 1 2 3 0 5 6 7 0 9 10 11 0...`
 
 
-Basic R
+
+Basic R - DataFrame
 ========================================================
-
-Lists
-
-```{r}
-lst = list(name="Erna", surname="Solberg", age=52, birthplace="Bergen")
-lst$name
-lst[1]
-length(lst)
-```
-
-
-Basic R
-========================================================
-DataFrame
-  - a matrix with certain restrictions
+DataFrame is a matrix with certain restrictions:
     + each column contains a vector
     + first row named header
   - used for storing/reading data from tables
@@ -389,7 +536,7 @@ data.frame(cities, squaremeters, prices)
 ```
 
 
-Basic R
+Basic R - DataFrame
 ========================================================
 
 Accessing a DataFrame as a normal matrix
@@ -401,7 +548,7 @@ apartmentPrices$prices
 ```
 
 
-Basic R
+Basic R - DataFrame
 ========================================================
 
 Accessing part of DataFrame
@@ -411,7 +558,22 @@ head(apartmentPrices, n=2)
 ```
 
 
-Basic R
+
+Flow of Control
+========================================================
+
+`Ifelse`
+
+```{r, eval=FALSE}
+library(foreign)
+kc1 <- read.arff("datasets/KC1.arff")
+head(kc1$Defective, 1)
+kc1$Defective <- ifelse(kc1$Defective == "Y", 1, 0)
+head(kc1$Defective, 1)
+```
+
+
+Basic R - I/O
 ========================================================
 
 Reading data from a table
@@ -423,17 +585,32 @@ format:
   - N-th line: row label + value for each variable
   
 
-Basic R
+Basic R - Reading data from a table
 ========================================================
 
-Reading data from a table
-
 ```{r}
-read.table("housing_prices.dat", header=TRUE, sep = ",")
+table <- read.table("housing_prices.dat", header=TRUE, sep = ",")
+table
 ```
 
 
-Basic R
+Basic R - Reading ARFF files
+========================================================
+
+`foreing` library
+
+```{r}
+library(foreign)
+isbsg <- read.arff("datasets/isbsg10teaser.arff")
+
+mydataISBSG <- isbsg[, c("FS", "N_effort")]
+
+str(mydataISBSG)
+```
+
+
+
+Basic R - Functions
 ========================================================
 
 Functions
@@ -448,31 +625,34 @@ return(object)
 ```
 
 
-Basic R
+Basic R `source()`
 ========================================================
 
 Functions
 
-  - storing to a file/reading from a file: source function
+  - storing to a file/reading from a file: `source()` function
     + create functions
     + save to a file
-    + use it by (source<filename>)
+    + use it by (`source<filename>`)
   
   
-Basic R
+Basic R - Graphics
 ========================================================
 
-Graphics
-  - data exploration
-  - many packages/functions available
+  - Useful for data exploration
+  - R provides many packages/functions available
   - `plot()` function
 
+```{r}
+x <- seq(0,1,0.1)
+y <- x^2
+plot(x,y)
+```
 
-Basic R
+Basic R - Graphics
 ========================================================
 
-Graphics
-  - saving graphs to a file:
+Saving graphs to a file:
 
 ```{r}
 png("cos.png")
@@ -480,41 +660,50 @@ plot(cos,-2*pi,2*pi)
 dev.off()
 ```
 
-Check your working directory.
-
+Check your working directory!  
 ![](cos.png)
 
 
 
-Visualisation
+
+
+
+
+
+
+
+
+
+
+
+
+Visualisation - Example maps
 ========================================================
 
-Visualising maps: maps
+Visualising maps
 
-  - cran url: http://cran.r-project.org/web/packages/maps/
+  - CRAN URL: http://cran.r-project.org/web/packages/maps/
   - creating maps of countries and regions of the world
   - latitude and longitude
   - low resolution maps
 
-basic usage:
+Basic usage:
 
 ```{r}
 library(maps)
 map(database="world",region="uk")
 ```
 
-Visualisation
+Visualisation - Example maps
 ========================================================
 
-Visualising maps: maps
-  
-  - visualize world map without inner boundaries
+Visualize world map without inner boundaries
   
 ```{r}
 map(database = "world",interior = FALSE)
 ```
 
-Visualisation
+Visualisation - Example maps
 ========================================================
 
 Visualising maps
@@ -531,7 +720,7 @@ map(database="japan",boundary=FALSE,interior=TRUE,col="gray",add=TRUE)
 ```
 
 
-Visualisation
+Visualisation - Example maps
 ========================================================
 
 Visualising maps
@@ -548,19 +737,31 @@ ggmap(map_of_oslo)
 ```
 
 
-
-
-Data analysis in R
+Data analysis - Datasets
 ========================================================
 
-Exploratory analysis
-  - explore the structure of geographically distributed set of points
+R comes with some built-in datasets ready to use
+[Description of datasets](http://www.sthda.com/english/wiki/r-built-in-data-sets)
 
-Point Process Statistics
-  - Spatial Point Pattern
-  - Spatial Point Process
-  - Complete Spatial Randomness (CSR) Test
-  - Ripley’s K-function
+```{r, eval=FALSE}
+data()  #list of datasets already available
+# load the mtcars  Motor Trend Car Road Tests
+data("mtcars")
+
+# Monthly Airline Passenger Numbers 1949-1960
+# Time series object ts() convert a vector to a time series
+data("AirPassengers")
+str(AirPassengers)
+plot(AirPassengers)
+
+#Etc.
+```
+
+Data analysis in R with Rattle
+========================================================
+
+![Rattle: GUI for Data mining with R](./figures/rattle.png)
+
 
 
 
