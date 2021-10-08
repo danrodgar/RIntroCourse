@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 R Tutorial
 ========================================================
 author: Kristiana University College
@@ -144,7 +149,7 @@ Exercise 1. Install R and RStudio (10 min)
   b. Choose the Desktop version.
 
 
-Rstudio
+RStudio
 ========================================================
 ![RStudio](./figures/RStudio.png)
 
@@ -167,7 +172,7 @@ Basic operations
 ========================================================
 
 ```r
-1+1 # Addition
+1 + 1 # Addition
 ```
 
 ```
@@ -955,7 +960,8 @@ DataFrame is a matrix with certain restrictions:
 prices = c(3.0, 4.5, 5.1, 3.7)
 squaremeters = c(80, 120, 110, 90)
 cities = c("Trondheim", "Trondheim", "Oslo", "Bergen")
-data.frame(cities, squaremeters, prices)
+df <- data.frame(cities, squaremeters, prices)
+print(df)
 ```
 
 ```
@@ -975,12 +981,31 @@ Accessing a DataFrame as a normal matrix
 
 ```r
 apartmentPrices = data.frame(cities, squaremeters, prices)
-apartmentPrices[3,]
+apartmentPrices[3,1]
 ```
 
 ```
-  cities squaremeters prices
-3   Oslo          110    5.1
+[1] "Oslo"
+```
+
+```r
+apartmentPrices[3]
+```
+
+```
+  prices
+1    3.0
+2    4.5
+3    5.1
+4    3.7
+```
+
+```r
+apartmentPrices[,1]
+```
+
+```
+[1] "Trondheim" "Trondheim" "Oslo"      "Bergen"   
 ```
 
 ```r
@@ -990,6 +1015,7 @@ apartmentPrices$prices
 ```
 [1] 3.0 4.5 5.1 3.7
 ```
+
 
 
 Basic R - DataFrame

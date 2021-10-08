@@ -1,0 +1,111 @@
+---
+title: "Example of Linear Regression in Effort Estimation"
+author: "KUC"
+date: Oct 2021
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+## Introduction
+
+Example of a linear regression model in Software Engineering, we will use ISBSG dataset.
+
+
+
+## Read the ISBSG dataset
+
+```{r Read file, message=FALSE}
+library(foreign)
+library(tidyverse)
+
+isbsg <- read.arff("datasets/isbsg10teaser.arff")
+df <- isbsg[, c("FS", "N_effort")]
+
+# Change the names of headings
+df <- df %>% rename( size = FS,
+               eff = N_effort)
+
+head(df)
+```
+
+
+
+Descritive statistics of the dataset (actually a dataframe in R)
+
+```{r df}
+summary(df)
+```
+
+
+```{r}
+cor(df$size, df$eff)  # calculate correlation between size and effort 
+```
+
+Based on the correlation, it seems that it will be difficult to properly estimate project using this model.
+
+The simplest plot, size vs. effort.
+
+```{r pressure, echo=FALSE}
+plot(df)
+```
+
+
+Scatter plots can help visualize any linear relationships between the dependent (_effort_) variable and independent (predictor) variables, in this case the size.
+
+```{r}
+scatter.smooth(x=df$size, y=df$eff, main="Size ~ Effort")  # scatterplot
+```
+
+
+Boxplots
+
+```{r}
+par(mfrow=c(1, 2))  # divide graph area in 2 columns
+# Boxplot for 'size'
+boxplot(df$size, main="Size")  #  ,sub=paste("Outliers: ", boxplot.stats(df$size)$out)
+boxplot(df$eff, main="Effort")  # , sub=paste("Outliers: ", boxplot.stats(df$eff)$out) box plot for 'eff'
+```
+
+
+```{r}
+par(mfrow = c(1, 2))  #n figures per row
+size <- df$size
+eff <- df$eff
+
+hist(size, col = "blue", xlab = "size", ylab = "Probability", main = "Histogram of project Size")
+lines(density(size, na.rm = T, from = 0, to = max(size)))
+plot(density(size))
+```
+
+
+```{r}
+library(e1071)
+par(mfrow=c(1, 2))  # divide graph area in 2 columns
+
+plot(density(df$size), main="Density Plot: Size", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(df$size), 2)))  # density plot for 'speed'
+polygon(density(df$size), col="red")
+
+plot(density(df$eff), main="Density Plot: Effort", ylab="Frequency", sub=paste("Skewness:", round(e1071::skewness(df$eff), 2)))  # density plot for 'dist'
+polygon(density(df$eff), col="red")
+```
+
+
+
+```{r}
+linearMod <- lm(eff ~ size, data=df)  # build linear regression model on full data
+print(linearMod)
+```
+
+```{r}
+modelSummary <- summary(linearMod) 
+print(modelSummary)
+```
+
+
+## Proposed Exercises
+
+1. As exercise, we suggest using testing the model using a testing dataset, i.e., divide the dataset into training and testing.
+
+2. As the data is quite skew and it does no follow a normal distribution, a possible solution is to transform the data using logarithms and repeat the process.
