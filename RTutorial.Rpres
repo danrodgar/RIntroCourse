@@ -63,18 +63,26 @@ Getting started
     - [Bioconductor](https://www.bioconductor.org/)
     - Etc
 
-Getting help in R
+Getting help in R -- cheatsheets
 ========================================================
+
+-   [All cheatsheets and translations](https://rstudio.com/resources/cheatsheets/)
 
 -   [RStudio cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
 -   [Base R cheat sheet](http://github.com/rstudio/cheatsheets/raw/master/base-r.pdf)
+
 -   [Advanced R cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf)
+
 -   [Data Visualization cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+
 -   [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+
 -   [R Markdown Basics] (<http://rmarkdown.rstudio.com/authoring_basics.html>)
+
+========================================================
+
 -   [Python with R and Reticulate Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/reticulate.pdf)
 -   [Caret](https://github.com/rstudio/cheatsheets/raw/master/caret.pdf) (More later)
--   [All cheatsheets and translations](https://rstudio.com/resources/cheatsheets/)
 -   Bookdown [bookdown.org](bookdown.org)
 
 
@@ -546,8 +554,7 @@ Accessing a DataFrame as a normal matrix
 apartmentPrices = data.frame(cities, squaremeters, prices)
 apartmentPrices[3,1]
 apartmentPrices[3]
-apartmentPrices[,1]
-apartmentPrices$prices
+
 ```
 
 
@@ -558,6 +565,8 @@ Basic R - DataFrame
 Accessing part of DataFrame
 
 ```{r}
+apartmentPrices[,1]
+apartmentPrices$prices
 head(apartmentPrices, n=2)
 ```
 
@@ -566,15 +575,55 @@ head(apartmentPrices, n=2)
 Flow of Control
 ========================================================
 
-`Ifelse`
+R provides most common control flow structures found in most languages
+
+`if`
+
+```{r ifExample}
+x <- 6
+if (x >= 5) {
+    "x is greater than or equals 5"
+} else {
+    "x is smaller than 5"
+}
+```
+
+Flow of Control - `ifelse`
+========================================================
+
+`ifelse`
 
 ```{r, eval=FALSE}
-library(foreign)
-kc1 <- read.arff("datasets/KC1.arff")
-head(kc1$Defective, 1)
 kc1$Defective <- ifelse(kc1$Defective == "Y", 1, 0)
-head(kc1$Defective, 1)
 ```
+
+Flow of Control - `for`
+========================================================
+
+`for` loops
+
+```{r forExample}
+for(x in 1:5){
+  print(x)
+}
+```
+
+
+Flow of Control - `while`
+========================================================
+
+
+```{r whileExample}
+i <- 1
+while (i < 6) {
+  print(i)
+  i = i+1
+}
+```
+
+
+
+
 
 
 Basic R - I/O
@@ -596,6 +645,9 @@ Basic R - Reading data from a table
 table <- read.table("housing_prices.dat", header=TRUE, sep = ",")
 table
 ```
+
+
+
 
 
 Basic R - Reading ARFF files
@@ -666,19 +718,6 @@ dev.off()
 
 Check your working directory!  
 ![](cos.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Visualisation - Example maps

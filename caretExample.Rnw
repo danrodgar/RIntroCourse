@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Introduction to the Caret (Classification and Regression Training in R) package}
+\author{Master Big Data}
+\date{September 2021}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage[most]{tcolorbox}
+
+\usepackage{url}            % simple URL typesetting
+\usepackage{hyperref}       % hyperlinks
+\hypersetup{colorlinks=true}	
+
+\usepackage{listings}       % Allows listing source code (mainly for appendixes)
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\usepackage{sans}
+
+\newcommand{\caret}{\texttt{caret}}
+
+\begin{document}
+
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+%\section{Introduction}
+
+The \caret package\footnote{\url{https://topepo.github.io/caret/}}~\cite{Kuhn2013} has become a key reference for machine learning in R over the last few years. 
+
+The \caret package works on the command line, with a very wide variety of functions that you can consult with the ls command, i.e., \texttt{ls("package:caret")}. These include those related to the construction of models and their evaluation, as well as algorithms for feature selection. This brief introduction will provide an overview of this package and references will shown some links to expand the knowledge about the package.
+
+Let's start with examples of supervised classification model construction. This final step in the construction process is provided by the train function: its extensive options can be found at \url{http://caret.r-forge.r-project.org/training.html}. Remember that loading packages in R is done from the command line \texttt{install.packages("caret")}. We will start from the sonar database, with 208 cases, 60 predictors and two values in the class variable. You can consult many links on the web about the nature of this dataset. We will load the \texttt{mlbench} library, which collects numerous benchmark datasets for automatic learning tasks. It is interesting to locate these datasets in the installation of the package on your computer.
+
+
+Before learning a classification model it is necessary to define the training and test instances that will shape our modeling. We fix a seed for future generations of random numbers. We use the \texttt{createDataPartition} function to generate a train-test partition of the 208 instances, which we will keep throughout the analysis pipeline. Consult your parameters and understand them in the context of our call. See two other sister functions of 'this one, \texttt{createFolds} and \texttt{createResample} and understand the differences between the three. From the integer string (indices) generated, we proceed to partition our original matrix into two objects.
+
+<<load_data, prompt=TRUE>>=
+library(caret)
+library(mlbench)
+data(Sonar)
+names(Sonar)
+set.seed(107)
+inTrain <- createDataPartition(y=Sonar$Class,p=.75,list=FALSE)
+str(inTrain)
+training <- Sonar[inTrain,]
+testing <- Sonar[-inTrain,]
+nrow(training)
+@
+
+
+Now that we have loaded the data, we can learn a model. We will do so with a well-known model, Linear Discriminant Analysis (LDA). In the same call to the model another key parameter must be highlighted in any data analysis task: the pre-processing filters will be passed by the predictors prior to learning (using the \texttt{preProc} parameter: see it options in the help). In this case, we apply a filter for centering and scaling the variables: a brief definition of these concepts can be found at: \url{http://rtutorialseries.blogspot.com.es/2012/03/r-tutorial-series-centering-variables.html}
+
+
+By observing the output of the model, you can see that \texttt{train} function in caret always estimates a percentage of good rankings over the initial training partition that we have already set (training object in our case). By default, this estimate is made using the \textit{bootstrap} technique. The \texttt{trainControl} function controls the type of error estimation. We will perform cross validation of (by default) 10 folds, repeating it 3 times. The method parameter of the \texttt{trainControl} function makes it possible to use different types of validation (check the help of the \texttt{train} function with \textit{?train}). Apart from the type of validation, the \texttt{trainControl} function allows us to set many parameters of the validation process. Still, remember that the model remains the same, learned about the training partition: but this partition has been resampled in different ways to estimate the model error. You will notice that together with the estimation of the percentage of well classified (\textit{accuracy}), we are shown the value of the \textit{Kappa} statistic, which is a measure that compares the observed \textit{accuracy} with the expected \textit{accuracy} of a random predictor (the explanation of this measure to evaluate a classifier is not trivial, and further information can be found at:
+\url{http://stats.stackexchange.com/questions/82162/kappa-statistic-in-plain-english}
+
+
+<<trainingModel, prompt=TRUE>>=
+ldaModel <- train (Class ~ ., data=training,method="lda",preProc=c("center","scale"))
+ldaModel
+ctrl <- trainControl(method = "repeatedcv",repeats=3)
+ldaModel3x10cv <- train (Class ~ ., data=training,method="lda",trControl=ctrl, preProc=c("center","scale"))
+ldaModel3x10cv
+@
+
+The call to the classifier training process can be further enriched with additional arguments to the \texttt{trainControl} function. One of these is the \texttt{summaryFunction}, which deals with the evaluation measures of the sorter. Thus, by activating its \texttt{twoClassSummary} option in  binary classification, we will obtain measurements such as the area under the ROC curve, sensitivity and specificity. To do this, and since they are not computed automatically, the \url{classProbs} option must also be activated so that the predicted probabilities for each value of the class variable are taken into account in each instance. 
+
+<<trainingModelROC, prompt=TRUE>>=
+ctrl <- trainControl(method = "repeatedcv",repeats=3, classProbs=TRUE, summaryFunction=twoClassSummary)
+ldaModel3x10cv <- train (Class ~ ., data=training, method="lda", trControl=ctrl, metric="ROC", preProc=c("center","scale"))
+ldaModel3x10cv
+@
+
+
+
+To predict future (unknown) cases, caret will take into account the classifier with the best value of its parameters. See the parameters of the predict function call at \url{http://www.inside-r.org/packages/cran/caret/docs/extractPrediction}. Among these, the \texttt{type} option deserves to be studied. With the  \texttt{probs} option we calculate, by test case, the probability a-posteriori for each value of the class; with the raw option we stay, by test case, with the value of the class variable with the highest probability a-posteriori. From this second option, we can calculate the confusion matrix and the collection of associated evaluation statistics; after all, this means "crossing", per test case, the predicted class values with the real class values.
+
+<<trainingModelROC, prompt=TRUE>>=
+ldaClasses <- predict(ldaModel3x10cv, newdata = testing, type = "raw")
+confusionMatrix(data=ldaClasses, testing$Class)
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\section{Conclusion}
+%``I always thought something was fundamentally wrong with the universe'' \citep{adams1995hitchhiker}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

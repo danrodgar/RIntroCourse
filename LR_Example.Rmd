@@ -10,7 +10,7 @@ output:
 
 ## Introduction
 
-Example of a linear regression model in Software Engineering, we will use ISBSG dataset.
+Example of a _linear regression_ model in Software Engineering, we will use *ISBSG* dataset.
 
 
 
@@ -32,7 +32,7 @@ head(df)
 
 
 
-Descritive statistics of the dataset (actually a dataframe in R)
+Descriptive statistics of the dataset (actually a dataframe in R)
 
 ```{r df}
 summary(df)
@@ -106,6 +106,6 @@ print(modelSummary)
 
 ## Proposed Exercises
 
-1. As exercise, we suggest using testing the model using a testing dataset, i.e., divide the dataset into training and testing.
+1. As exercise, the validation of the model should be done using a testing dataset, i.e., unseen data, to so we need to divide the dataset into training and testing, create the model using training data and validate it the remaining data.
 
-2. As the data is quite skew and it does no follow a normal distribution, a possible solution is to transform the data using logarithms and repeat the process.
+2. As the data is quite skew and it does not follow a normal distribution, a possible solution is to transform the data using logarithms and repeat the process of learning and validation. 
