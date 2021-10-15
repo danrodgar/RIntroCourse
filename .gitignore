@@ -4,3 +4,9 @@
 .Ruserdata
 .pdf
 .html
+
+.bbl
+.log
+.pdf
+.gz
+.tex
